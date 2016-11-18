@@ -6,7 +6,7 @@ clear, close all
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sample_freq = 48000;    %sample frequency 48 kHz 
 bits = 16;              %bits
-record_1 = audiorecorder(sample_freq,bits,1,1);
+record_1 = audiorecorder(sample_freq,bits,1,0);
 disp('Start speaking.') 
 record(record_1);       % record
 record_time = 5;        % record time in sec 
