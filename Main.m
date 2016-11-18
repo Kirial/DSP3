@@ -1,12 +1,14 @@
 % Reset alt for toppen
+
 clear, close all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%opgave 1%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<<<<<< HEAD
 sample_freq = 48000;    %sample frequency 48 kHz 
 bits = 16;              %bits
-record_1 = audiorecorder(sample_freq,bits,1,1);
+record_1 = audiorecorder(sample_freq,bits,1,0);
 disp('Start speaking.') 
 record(record_1);       % record
 record_time = 5;        % record time in sec 
@@ -17,17 +19,16 @@ play(record_1);         % afspil
 pause(5);               % 
 record_1_data = getaudiodata(record_1);
 
+=======
+>>>>>>> e08bc2152dd74bf46a41cd4269ef33cd9c88ee40
 
+%dsp3_opg1_v1();
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%opgave 2%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
-
-
+dsp3_opg2_v1();
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%opgave 3%%%%%%%%%%%%%%%%%%%%%%%%%%%
