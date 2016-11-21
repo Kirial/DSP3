@@ -55,6 +55,7 @@ xlabel('amplitude')
 
 %fft
 audio_data_fft = fft(audio_data);
-
+fft_freq = (0*(length(audio_data)-1))*(sampling_freq/length(audio_data)); 
+figure
 
 %end
