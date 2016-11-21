@@ -7,21 +7,47 @@
 % i Matlab og dokumenter designet.
 
 
-function [] = dsp3_opg2_v1()
+%function [] = dsp3_opg2_v1()
+
+% Load lydfiler
+
+audio_name = 'audio_klip.wav';
+
+
+
+% Meta
+
+samplingRate = 48000; % [fs]
+
+sampleLength = 10; % [sek]
+
+timeVector = 0:1/samplingRate:sampleLength-1/samplingRate;
+
+% Sampling
+
+
+
+
+% Fourior Transformation - For at finde frekvens bånd for A,E,I
+
+%yA = fft(
+
 
 % Bandpass - Filter
+
+
 
 lowerCutoffFrequency = 4000;
 
 upperCutoffFrequency = 5000;
 
-samplingRate = 8000;
+
 
 % --- Filter Coefficients ---
 
-Omega_low = 2 * pi * (lowerCutoffFrequency / samplingRate)
+omegaLow = 2 * pi * (lowerCutoffFrequency / samplingRate)
 
-Omega_up = 2 * pi * (upperCutoffFrequency / samplingRate)
+omegaUp = 2 * pi * (upperCutoffFrequency / samplingRate)
 
 
 
@@ -31,4 +57,4 @@ Omega_up = 2 * pi * (upperCutoffFrequency / samplingRate)
 
 % "EEeee..."
 
-end
+%end
