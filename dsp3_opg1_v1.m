@@ -22,7 +22,7 @@ function [] = dsp3_opg1_v1()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %hvis man skal tage en eksisterende audio fil skal man bruge det 
-audio_name = 'audioclip-1478078593.wav';    %talen 
+audio_name = 'audio_klip.wav';              %talen 
 sampling_freq = 48000;                      %samplings frekvens
 T_opg_1 = 1/sampling_freq;                  %Tid mellem Samples 
 audio_samples = [1,3.7*sampling_freq ];     %hvor lang tid der skal samples 
