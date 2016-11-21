@@ -1,3 +1,12 @@
+% 1. Lavpas-filter til støjreduktion (fjern noget hvid-støj fra et talesignal)
+% Indspil selv et talesignal i Matlab og tilføj efterfølgende hvid støj til signalet i Matlab. 
+% Analyser signalet før og efter tilføjelse af hvid støj – 
+% og bestem de nødvendige filterspecifikationer til et lavpas-filter, 
+% så kun de absolut nødvendige talesignaler (med støj oveni) kommer igennem filteret.
+% Analyser signalet igen efter filtrering.
+
+
+
 
 %function [] = dsp3_opg1_v1()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
