@@ -1,5 +1,5 @@
 
-%function [] = dsp3_opg1_v1()
+function [] = dsp3_opg1_v1()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % hvis man selv skal optage skal man bruge det funktion. 
@@ -45,7 +45,6 @@ xlabel('tid')
 xlabel('amplitude')
 
 %fft
-audio_data_fft = fft(audio_data);
+aud
 
-
-%end
+end
