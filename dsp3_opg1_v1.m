@@ -43,7 +43,7 @@ audio_data = audio_d(:,1)';
 tid_data = 0:T:3.7-T;
 % skal udkomenteres hvis det skal afspilles 
 % sound(audio_data,sampling_freq);
-% pause(3.7);                                 % hvis man vil afspile lyd så sæt pause på 
+% pause(3.7);                        % hvis man vil afspile lyd så sæt pause på 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
