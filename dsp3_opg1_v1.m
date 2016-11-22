@@ -41,7 +41,7 @@ audio_samples = [1,3.7*sampling_freq ];     %hvor lang tid der skal samples
 [audio_d,sampling_freq] = audioread(audio_name,audio_samples);
 audio_data = audio_d(:,1)';
 tid_data = 0:T:3.7-T;
-% skal udkomenteres hvis det skal afspilles 
+% % skal udkomenteres hvis det skal afspilles 
 % sound(audio_data,sampling_freq);
 % pause(3.7);                                 % hvis man vil afspile lyd så sæt pause på 
 
@@ -61,13 +61,14 @@ ylabel('amplitude')
 audio_data_fft = fft(audio_data);
 fft_freq = (0:(length(audio_data)-1))*(sampling_freq/length(audio_data)); 
 subplot(3,1,2) 
-hold
 plot(fft_freq, abs(audio_data_fft))
+xlabel('Freqvens')
+ylabel('Magnitude')
 subplot(3,1,3)
 spectrogram(audio_data_fft,'yaxis')
 
 %tilførsel af støj 
-noise_audio_data = awgn(audio_data,10);
+noise_audio_data = awgn(audio_data,15);
 % %hvis man skal afspille data med støj skal man udkomentere de næste 2 linje 
 % sound(noise_audio_data,sampling_freq);
 % pause(3.7); 
@@ -75,15 +76,16 @@ noise_audio_data = awgn(audio_data,10);
 figure
 subplot(3,2,1)  
 plot(tid_data,noise_audio_data);
-title('Tale plot med støj og filter')
+title('Tale plot med støj')
 ylabel('tid')
 xlabel('amplitude')
 
 %fft med støj
 noise_audio_data_fft = fft(noise_audio_data); 
-subplot(3,2,3) 
-hold
+subplot(3,2,3)
 plot(fft_freq, abs(noise_audio_data_fft))
+xlabel('Freqvens')
+ylabel('Magnitude')
 subplot(3,2,5)
 spectrogram(noise_audio_data_fft,'yaxis')
 
@@ -91,19 +93,21 @@ spectrogram(noise_audio_data_fft,'yaxis')
 filter_noise_audio_data = filter(L_filter,noise_audio_data); 
 subplot(3,2,2)  
 plot(tid_data,filter_noise_audio_data);
+title('Tale plot efter filter')
 ylabel('tid')
 xlabel('amplitude')
 
 %fft med støj med filter 
 filter_noise_audio_data_fft = fft(filter_noise_audio_data); 
 subplot(3,2,4) 
-hold
 plot(fft_freq, abs(filter_noise_audio_data_fft))
+xlabel('Freqvens')
+ylabel('Magnitude')
 subplot(3,2,6)
 spectrogram(filter_noise_audio_data_fft,'yaxis')
 % %hvis man skal afspille data med støj skal man udkomentere de næste 2 linje 
-sound(filter_noise_audio_data,sampling_freq);
-pause(3.7);
+% sound(filter_noise_audio_data,sampling_freq);
+% pause(3.7);
 
 
 %end
