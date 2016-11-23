@@ -5,8 +5,10 @@
 % så man kan finde et passende ’triggerpunkt’ til at bestemme bestemte steder på signalet. 
 % Implementer filteret i Matlab og dokumenter designet.
 
-function [] = dsp3_opg4_v1()
+%function [] = dsp3_opg4_v1()
 
-6 + 5
 
-end
+
+
+
+%end
