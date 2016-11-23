@@ -6,10 +6,7 @@
 % Implementer filteret i Matlab og dokumenter designet.
 
 load('opg3_signal.mat')
-figure
 plot(myRecording);
-title('fft for udsnit af filen kun med brum.');
-
 
 sound(myRecording, 8000);
 pause(8);
@@ -38,7 +35,7 @@ brummen = audio_d(:,1)';
 tid_data = 54.8:T:57.5-T;
 
 sound(brummen);
-pause(2.7);
+pause(4);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Equiripple Highpass filter designed using the FIRPM function.
@@ -64,7 +61,7 @@ HP_Brum = dfilt.dffir(b);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 filter1_u_brum = filter(HP_Brum, brummen);
 sound(filter1_u_brum);
-pause(2.7);
+pause(4);
 clear sound
 
 figure 
