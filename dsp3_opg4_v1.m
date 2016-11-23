@@ -6,12 +6,18 @@
 % Implementer filteret i Matlab og dokumenter designet.
 
 %function [] = dsp3_opg4_v1()
-load('nervesignal.mat');
-amplitude_EKG = cell2mat(nsVector3(:,1)');
-tid_EKG = cell2mat(nsVector3(:,2)');
+load('nervesignal2.mat');
+figure
+plot(nsVectorExp2(:,2),nsVectorExp2(:,1));
 
-figure 
-plot(tid_EKG, amplitude_EKG);
-
+EKG_fft = fft(nsVectorExp2(:,1));
+P2 = abs(EKG_fft);
+P1 = P2(1:128/2+1);
+EKG_x =  8*(0:(128/2))/128;
+figure
+plot(EKG_x,P1);
+this_signal = filter(opg4_filter, nsVectorExp2(:,1));
+figure
+plot(this_signal);
 
 %end
