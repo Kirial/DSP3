@@ -158,10 +158,10 @@ a_bpf_h2 = (sin(a_omU*2)) / 2 * pi - (sin(a_omL*2)) / 2 * pi
 
 % "AAaaa..."
 
-t_filteredA = filter(bandpassfilter7,sound_t);
-a_filteredA = filter(bandpassfilter7,sound_a);
-a_filteredA = filter(bandpassfilter7,sound_a);
-a_filteredA = filter(bandpassfilter7,sound_a);
+t_filteredA = filter(a_bandpassfilter7,sound_t);
+a_filteredA = filter(a_bandpassfilter7,sound_a);
+a_filteredA = filter(a_bandpassfilter7,sound_a);
+a_filteredA = filter(a_bandpassfilter7,sound_a);
 
 figure
 
@@ -173,18 +173,20 @@ subplot(2,1,2);
 
 plot(sound_t);
 
-sound(sound_t,samplingRate);
+%sound(sound_t,samplingRate); pause(4);
 
-pause(4);
+%sound(t_filteredA,samplingRate); pause(4);
 
-sound(t_filteredA,samplingRate);
-
-pause(4);
-
-sound(a_filteredA,samplingRate);
+sound(a_filteredA,samplingRate); pause(4);
 
 % "IIiii..."
 
+i_filteredA = filter(a_bandpassfilter7,sound_i);
+sound(i_filteredA,samplingRate); pause(4);
+
 % "EEeee..."
+
+e_filteredA = filter(a_bandpassfilter7,sound_e);
+sound(e_filteredA,samplingRate); pause(4);
 
 %end
