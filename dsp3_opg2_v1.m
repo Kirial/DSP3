@@ -156,37 +156,112 @@ a_bpf_h0 = (a_omU - a_omL) / pi
 a_bpf_h1 = (sin(a_omU*1)) / 1 * pi - (sin(a_omL*1)) / 1 * pi
 a_bpf_h2 = (sin(a_omU*2)) / 2 * pi - (sin(a_omL*2)) / 2 * pi
 
-% "AAaaa..."
+% --- FILTERS
 
-t_filteredA = filter(a_bandpassfilter7,sound_t);
-a_filteredA = filter(a_bandpassfilter7,sound_a);
-a_filteredA = filter(a_bandpassfilter7,sound_a);
-a_filteredA = filter(a_bandpassfilter7,sound_a);
+a_bpf = a_bandpassfilter8;
+e_bpf = e_bandpassfilter1;
+i_bpf = i_bandpassfilter1;
+
+% --- Test Filtered
+
+t_filteredA = filter(a_bpf,sound_t);
+t_filteredE = filter(e_bpf,sound_t);
+t_filteredI = filter(i_bpf,sound_t);
 
 figure
 
-subplot(2,1,1);
-
-plot(t_filteredA);
-
-subplot(2,1,2);
-
+orig_t = subplot(4,1,1);
 plot(sound_t);
+title(orig_t,'Original');
+
+bpfa_t = subplot(4,1,2);
+plot(t_filteredA);
+title(bpfa_t,'Test filtered A');
+
+bpfe_t = subplot(4,1,3);
+plot(t_filteredE);
+title(bpfe_t,'Test filtered E');
+
+bpfi_t = subplot(4,1,4);
+plot(t_filteredI);
+title(bpfi_t,'Test filtered I');
 
 %sound(sound_t,samplingRate); pause(4);
-
 %sound(t_filteredA,samplingRate); pause(4);
 
-sound(a_filteredA,samplingRate); pause(4);
+% "AAaaa..."
+
+a_filteredA = filter(a_bpf,sound_a);
+e_filteredA = filter(a_bpf,sound_e);
+i_filteredA = filter(a_bpf,sound_i);
 
 % "IIiii..."
 
-i_filteredA = filter(a_bandpassfilter7,sound_i);
-sound(i_filteredA,samplingRate); pause(4);
+a_filteredE = filter(e_bpf,sound_a);
+e_filteredE = filter(e_bpf,sound_e);
+i_filteredE = filter(e_bpf,sound_i);
 
 % "EEeee..."
 
-e_filteredA = filter(a_bandpassfilter7,sound_e);
-sound(e_filteredA,samplingRate); pause(4);
+a_filteredI = filter(i_bpf,sound_a);
+e_filteredI = filter(i_bpf,sound_e);
+i_filteredI = filter(i_bpf,sound_i);
+
+
+% --- Results
+
+figure
+
+orig_a = subplot(4,3,1);
+plot(sound_a);
+title(orig_a,'Original A');
+
+bpfa_a = subplot(4,3,4);
+plot(a_filteredA);
+title(bpfa_a,'A filtered A');
+
+bpfa_e = subplot(4,3,7);
+plot(e_filteredA);
+title(bpfa_e,'E filtered A');
+
+bpfa_i = subplot(4,3,10);
+plot(i_filteredA);
+title(bpfa_i,'I filtered A');
+
+%---
+
+orig_e = subplot(4,3,2);
+plot(sound_e);
+title(orig_e,'Original E');
+
+bpfe_a = subplot(4,3,5);
+plot(a_filteredE);
+title(bpfe_a,'A filtered E');
+
+bpfe_e = subplot(4,3,8);
+plot(e_filteredE);
+title(bpfe_e,'E filtered E');
+
+bpfe_i = subplot(4,3,11);
+plot(i_filteredE);
+title(bpfe_i,'I filtered E');
+
+%---
+
+orig_i = subplot(4,3,3);
+plot(sound_i);
+title(orig_i,'Original I');
+
+bpfi_a = subplot(4,3,6);
+plot(a_filteredI);
+title(bpfi_a,'A filtered I');
+
+bpfi_e = subplot(4,3,9);
+plot(e_filteredI);
+title(bpfi_e,'E filtered I');
+
+bpfi_i = subplot(4,3,12);
+plot(i_filteredI);
+title(bpfi_i,'I filtered I');
 
 %end
