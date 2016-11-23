@@ -158,8 +158,10 @@ a_bpf_h2 = (sin(a_omU*2)) / 2 * pi - (sin(a_omL*2)) / 2 * pi
 
 % "AAaaa..."
 
-t_filteredA = filter(a_bandpass2,sound_t);
-a_filteredA = filter(a_bandpass2,sound_a);
+t_filteredA = filter(bandpassfilter7,sound_t);
+a_filteredA = filter(bandpassfilter7,sound_a);
+a_filteredA = filter(bandpassfilter7,sound_a);
+a_filteredA = filter(bandpassfilter7,sound_a);
 
 figure
 
