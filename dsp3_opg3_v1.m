@@ -55,11 +55,12 @@ brumme_test_plot_x = (8000)*(0:(length(fft_brumen)/2))/length(fft_brumen);
 
 figure
 t1 = subplot(2,1,1);
+figure
 plot (brumme_test_plot_x,brumme_test_plot_y);
-title(t1, 'FFT af signal uden tale før filtre');
-xlabel(t1, 'Frekvens');
-ylabel(t1, 'Magnitude');
-
+title('zoom af signal uden tale før filtre');
+xlabel('Frekvens');
+ylabel('Magnitude');
+xlim([0 500])
 % sound(brummen);
 % pause(2.7);
 
