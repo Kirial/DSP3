@@ -57,10 +57,18 @@ figure
 t1 = subplot(2,1,1);
 figure
 plot (brumme_test_plot_x,brumme_test_plot_y);
+<<<<<<< HEAD
 title('zoom af signal uden tale før filtre');
 xlabel('Frekvens');
 ylabel('Magnitude');
 xlim([0 500])
+=======
+axis([0 500 0 150]);
+title(t1, 'FFT af signal uden tale før filtre');
+xlabel(t1, 'Frekvens');
+ylabel(t1, 'Magnitude');
+
+>>>>>>> 572c454749c14b3f5c082ce7863b74961796b872
 % sound(brummen);
 % pause(2.7);
 
