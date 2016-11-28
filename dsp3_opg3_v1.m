@@ -8,15 +8,26 @@
 load('opg3_signal.mat')
 figure
 plot(myRecording);
-title('fft for udsnit af filen kun med brum.');
+title('myRecording');
+xlabel('tid');
+ylabel('amplitude');
 
+Fs = 8000;  % Sampling Frequency
 
-sound(myRecording, 8000);
-pause(8);
-clear sound
-fft_recording = fft(myRecording);
+% sound(myRecording, Fs);
+% pause(8);
+% clear sound
+fft_recording = abs(fft(myRecording));
+
+%%%%%% FFT af Recording
+fft_recording_plot_y = fft_recording(1:length(fft_recording)/2+1);
+fft_recording_plot_x = (8000)*(0:(length(fft_recording)/2))/length(fft_recording);
+
 figure
-plot (abs(fft_recording));
+plot (fft_recording_plot_x,fft_recording_plot_y);
+title('FFT af myRecording før filtre');
+xlabel('Frekvens');
+ylabel('Magnitude');
 
 %%%%%%%%%%%%% Hvis man ønsker at få signalet ud som en wave fil.%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,30 +40,39 @@ plot (abs(fft_recording));
 
 %%%%%% Udsnit af signalet for at analysere hvor der ikke er tale %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-audio_name = 'handel.wav';              %talen 
-sampling_freq = 8000;                   %samplings frekvens
-T = 1/sampling_freq;                    %Tid mellem Samples 
-audio_samples = [1,2.4*sampling_freq ]; %hvor lang tid der skal samples 
-[audio_d,sampling_freq] = audioread(audio_name,audio_samples);
+audio_name = 'handel.wav';   %talen 
+T = 1/Fs;                    %Tid mellem Samples 
+audio_samples = [1,2.4*Fs ]; %hvor lang tid der skal samples 
+[audio_d,Fs] = audioread(audio_name,audio_samples);
 brummen = audio_d(:,1)';
 tid_data = 54.8:T:57.5-T;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fft_brummen = fft(brummen);
+fft_brumen = abs(fft(brummen));
+brumme_test_plot_y = fft_brumen(1:length(fft_brumen)/2+1);
+brumme_test_plot_x = (8000)*(0:(length(fft_brumen)/2))/length(fft_brumen);
+
 figure
-plot (abs(fft_brummen));
-sound(brummen);
-pause(2.7);
+t1 = subplot(2,1,1);
+plot (brumme_test_plot_x,brumme_test_plot_y);
+title(t1, 'FFT af signal uden tale før filtre');
+xlabel(t1, 'Frekvens');
+ylabel(t1, 'Magnitude');
 
+% sound(brummen);
+% pause(2.7);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Filtre %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Equiripple Highpass filter designed using the FIRPM function.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                       % Highpass filter
 % All frequency values are in Hz.
-Fs = 8000;  % Sampling Frequency
 
-Fstop = 130;             % Stopband Frequency
-Fpass = 140;             % Passband Frequency
-Dstop = 0.0001;          % Stopband Attenuation
+Fstop = 150;             % Stopband Frequency
+Fpass = 160;             % Passband Frequency
+Dstop = 1e-05;           % Stopband Attenuation
 Dpass = 0.057501127785;  % Passband Ripple
 dens  = 20;              % Density Factor
 
@@ -61,65 +81,107 @@ dens  = 20;              % Density Factor
 
 % Calculate the coefficients using the FIRPM function.
 b  = firpm(N, Fo, Ao, W, {dens});
-HP_Brum = dfilt.dffir(b);
+highpass = dfilt.dffir(b);
 
-
-
-%%%%%%%%%%% Test af HP_filter på udsnit uden tale 100-110 &&&&&&&&&&&&&&&&&
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-filter1_u_brum = filter(HP_Brum, brummen);
-sound(filter1_u_brum);
-pause(2.7);
-clear sound
+                       % Lowpass filter
 
-figure 
-fft1_brummen = fft(filter1_u_brum);
-plot (abs(fft1_brummen));
-title('fft for udsnit af filen kun med brum.');
+Fpass1 = 2500;            % Passband Frequency
+Fstop1 = 2600;            % Stopband Frequency
+Dpass1 = 0.057501127785;  % Passband Ripple
+Dstop1 = 0.01;            % Stopband Attenuation
+dens1  = 20;              % Density Factor
 
-% %%%%%%%%%%% Test af LP_filter på udsnit uden tale 8000-8100 &&&&&&&&&&&&&&&&&
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % Equiripple Lowpass filter designed using the FIRPM function.
-% % All frequency values are in Hz.
-% 
-% Fpass = 8000;            % Passband Frequency
-% Fstop = 8100;            % Stopband Frequency
-% Dpass = 0.057501127785;  % Passband Ripple
-% Dstop = 0.0001;          % Stopband Attenuation
-% dens  = 20;              % Density Factor
-% 
-% % Calculate the order from the parameters using FIRPMORD.
-% [N, Fo, Ao, W] = firpmord([Fpass, Fstop]/(Fs/2), [1 0], [Dpass, Dstop]);
-% 
-% % Calculate the coefficients using the FIRPM function.
-% b  = firpm(N, Fo, Ao, W, {dens});
-% LP_Brum = dfilt.dffir(b);
-%%%%%%%%%%% Test af HP_filter på udsnit uden tale 100-110 &&&&&&&&&&&&&&&&&
+% Calculate the order from the parameters using FIRPMORD.
+[N1, Fo1, Ao1, W1] = firpmord([Fpass1, Fstop1]/(Fs/2), [1 0], [Dpass1, Dstop1]);
+
+% Calculate the coefficients using the FIRPM function.
+b1  = firpm(N1, Fo1, Ao1, W1, {dens1});
+lowpass = dfilt.dffir(b1);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Filtre slut %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% filter2_u_brum = filter(LP_Brum, filter1_u_brum);
-% sound(filter2_u_brum);
-% pause(2.7);
+
+
+%%%%%%%%%%%%%%% Test af HP_filter på udsnit uden tale  %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% brumme_test = abs(fft(brummen));
+% brumme_test_plot_y = brumme_test(1:length(brumme_test)/2+1);
+% brumme_test_plot_x = (8000)*(0:(length(brumme_test)/2))/length(brumme_test);
+% figure
+% plot (brumme_test_plot_x,brumme_test_plot_y);
+% title('FFT af myRecording');
+% xlabel('Frekvens');
+% ylabel('Magnitude');
+
+% sound(brumme);
+% pause(3);
 % clear sound
-% 
-% figure 
-% fft1_brummen = fft(filter2_u_brum);
-% plot (abs(fft1_brummen));
-% title('fft for udsnit af filen kun med brum.');
 
-%%%%%%%%%%%%%%%%%%%% endelig test af filter på lydfilen. %%%%%%%%%%%%%%%%%%
+brumme_filter_test = filter(highpass, myRecording);
+
+% sound(brumme_filter_test);
+% pause(3);
+% clear sound
+
+brumme_filter_test = filter(lowpass, brumme_filter_test);
+
+% sound(brumme_filter_test);
+% pause(3);
+% clear sound
+
+brumme_filter_test = abs(fft(brumme_filter_test));
+brumme_test_filter_plot_y = brumme_filter_test(1:length(brumme_filter_test)/2+1);
+brumme_test_filter_plot_x = (8000)*(0:(length(brumme_filter_test)/2))/length(brumme_filter_test);
+%figure
+
+t2 = subplot(2,1,2);
+plot (brumme_test_filter_plot_x,brumme_test_filter_plot_y);
+title(t2, 'FFT af signal uden tale efter filtre');
+xlabel(t2, 'Frekvens');
+ylabel(t2, 'Magnitude');
+
+%%%%%%%%%%%%%%%%%%% Test af filtre på hele signalet %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-filter_u_brum = filter(HP_Brum, myRecording);
-sound(filter_u_brum);
-pause(8);
-clear sound
 
-filter2_u_brum = filter(BP_Brum, filter_u_brum);
-sound(filter2_u_brum);
-pause(8);
-clear sound
 
+fft_test = abs(fft(myRecording));
+fft_test_plot_y = fft_test(1:length(fft_test)/2+1);
+fft_test_plot_x = (8000)*(0:(length(fft_test)/2))/length(fft_test);
 figure
-plot (brummen);
-figure
-plot (abs(brummen));
+
+t1 = subplot(2,1,1);
+plot (fft_test_plot_x,fft_test_plot_y);
+title(t1, 'FFT af myRecording før filtre');
+xlabel(t1, 'Frekvens');
+ylabel(t1, 'Magnitude');
+
+% sound(myRecording);
+% pause(8);
+% clear sound
+
+
+filter_test = filter(lowpass, myRecording);
+
+% sound(filter_test);
+% pause(8);
+% clear sound
+
+filter_test = filter(highpass, filter_test);
+
+% sound(filter_test);
+% pause(8);
+% clear sound
+
+fft_filter_test = abs(fft(filter_test));
+fft_test_filter_plot_y = fft_filter_test(1:length(fft_filter_test)/2+1);
+fft_test_filter_plot_x = (8000)*(0:(length(fft_filter_test)/2))/length(fft_filter_test);
+%figure
+
+t2 = subplot(2,1,2);
+plot (fft_test_filter_plot_x,fft_test_filter_plot_y);
+title(t2, 'FFT af myRecording efter filtre');
+xlabel(t2, 'Frekvens');
+ylabel(t2, 'Magnitude');
 
