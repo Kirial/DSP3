@@ -51,21 +51,21 @@ tid_data = 0:T:3.7-T;
 
 %%%%%%%%%%%%%%%%%%%%%%% begynd på tale analyse %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
-subplot(3,1,1)  
+subplot(2,1,1)  
 plot(tid_data,audio_data);
 title('Tale plot')
-xlabel('tid')
-ylabel('amplitude')
+xlabel('tid (s)')
+ylabel('amplitude (V)')
 
 %fft
 audio_data_fft = fft(audio_data);
-fft_freq = (0:(length(audio_data)-1))*(sampling_freq/length(audio_data)); 
-subplot(3,1,2) 
-plot(fft_freq, abs(audio_data_fft))
-xlabel('Freqvens')
+abs_audio_data = abs(audio_data_fft);
+plot_signal = abs_audio_data(1:length(audio_data)/2+1); % vælger kun det interval som vi skal bruge 
+fft_freq = (sampling_freq )*(0:(length(audio_data)/2))/length(audio_data); % frekvens resolution 
+subplot(2,1,2) 
+plot(fft_freq, plot_signal)
+xlabel('Freqvens (Hz)')
 ylabel('Magnitude')
-subplot(3,1,3)
-spectrogram(audio_data_fft,'yaxis')
 
 %tilførsel af støj 
 noise_audio_data = awgn(audio_data,15);
@@ -74,37 +74,37 @@ noise_audio_data = awgn(audio_data,15);
 % pause(3.7); 
 
 figure
-subplot(3,2,1)  
+subplot(2,2,1)  
 plot(tid_data,noise_audio_data);
 title('Tale plot med støj')
-ylabel('tid')
-xlabel('amplitude')
+xlabel('tid (s)')
+ylabel('amplitude (V)')
 
 %fft med støj
 noise_audio_data_fft = fft(noise_audio_data); 
-subplot(3,2,3)
-plot(fft_freq, abs(noise_audio_data_fft))
-xlabel('Freqvens')
+subplot(2,2,3)
+abs_noise = abs(noise_audio_data_fft);
+noise_plot_signal = abs_noise(1:length(audio_data)/2+1);
+plot(fft_freq,noise_plot_signal)
+xlabel('Frekvens (Hz)')
 ylabel('Magnitude')
-subplot(3,2,5)
-spectrogram(noise_audio_data_fft,'yaxis')
 
 %filter brug 
 filter_noise_audio_data = filter(L_filter,noise_audio_data); 
-subplot(3,2,2)  
+subplot(2,2,2)  
 plot(tid_data,filter_noise_audio_data);
 title('Tale plot efter filter')
-ylabel('tid')
-xlabel('amplitude')
+xlabel('tid (s)')
+ylabel('amplitude (V)')
 
 %fft med støj med filter 
 filter_noise_audio_data_fft = fft(filter_noise_audio_data); 
-subplot(3,2,4) 
-plot(fft_freq, abs(filter_noise_audio_data_fft))
-xlabel('Freqvens')
+subplot(2,2,4) 
+filter_noise_abs = abs(filter_noise_audio_data_fft);
+filter_noise_plot = filter_noise_abs(1:length(audio_data)/2+1);
+plot(fft_freq,filter_noise_plot)
+xlabel('Frekvens (Hz)')
 ylabel('Magnitude')
-subplot(3,2,6)
-spectrogram(filter_noise_audio_data_fft,'yaxis')
 % %hvis man skal afspille data med støj skal man udkomentere de næste 2 linje 
 % sound(filter_noise_audio_data,sampling_freq);
 % pause(3.7);
