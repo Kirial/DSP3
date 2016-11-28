@@ -56,6 +56,7 @@ brumme_test_plot_x = (8000)*(0:(length(fft_brumen)/2))/length(fft_brumen);
 figure
 t1 = subplot(2,1,1);
 plot (brumme_test_plot_x,brumme_test_plot_y);
+axis([0 500 0 150]);
 title(t1, 'FFT af signal uden tale før filtre');
 xlabel(t1, 'Frekvens');
 ylabel(t1, 'Magnitude');
