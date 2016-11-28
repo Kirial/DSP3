@@ -50,8 +50,8 @@ pause(2.7);
 % All frequency values are in Hz.
 Fs = 8000;  % Sampling Frequency
 
-Fstop = 130;             % Stopband Frequency
-Fpass = 140;             % Passband Frequency
+Fstop = 100;             % Stopband Frequency
+Fpass = 110;             % Passband Frequency
 Dstop = 0.0001;          % Stopband Attenuation
 Dpass = 0.057501127785;  % Passband Ripple
 dens  = 20;              % Density Factor
