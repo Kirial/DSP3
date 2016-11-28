@@ -77,8 +77,8 @@ figure
 subplot(2,2,1)  
 plot(tid_data,noise_audio_data);
 title('Tale plot med støj')
-ylabel('tid (s)')
-xlabel('amplitude (V)')
+xlabel('tid (s)')
+ylabel('amplitude (V)')
 
 %fft med støj
 noise_audio_data_fft = fft(noise_audio_data); 
@@ -94,8 +94,8 @@ filter_noise_audio_data = filter(L_filter,noise_audio_data);
 subplot(2,2,2)  
 plot(tid_data,filter_noise_audio_data);
 title('Tale plot efter filter')
-ylabel('tid (s)')
-xlabel('amplitude (V)')
+xlabel('tid (s)')
+ylabel('amplitude (V)')
 
 %fft med støj med filter 
 filter_noise_audio_data_fft = fft(filter_noise_audio_data); 
