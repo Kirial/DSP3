@@ -60,7 +60,6 @@ i_fft = abs(fft(sound_i));
 i_fft = i_fft(1:length_i/2);
 i_f = samplingRate * (0:length_i/2-1)/length_i;
 
-
 % --- Plotting
 
 figure
@@ -159,8 +158,15 @@ a_bpf_h2 = (sin(a_omU*2)) / 2 * pi - (sin(a_omL*2)) / 2 * pi
 % --- FILTERS
 
 a_bpf = a_bandpassfilter8;
-e_bpf = e_bandpassfilter1;
-i_bpf = i_bandpassfilter1;
+
+e_bpf = e_bandpassfilter2;
+
+i_bpf = i_bandpassfilter2;
+
+
+freqz(a_bpf);
+freqz(e_bpf);
+freqz(i_bpf);
 
 % --- Test Filtered
 
